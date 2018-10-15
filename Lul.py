@@ -9,27 +9,35 @@ class EmailValidator:
         kirill = ('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')
         find_kirill = [x for x in kirill if x in email.lower()]
         if len(find_kirill) > 0:
-            return ""
+            return "Error"
         for letter in email:
             if letter == "@":
                 counter += 1
         if counter > 1:
-            return ""
+            return "Error"
         with suppress(Exception):
             [some_name, some_domen] = email.split("@")
             [some_domen, some_domen_zone] = some_domen.split(".")
-        return some_name + "@" + some_domen + "." + some_domen_zone
+            return some_name + "@" + some_domen + "." + some_domen_zone
 
 
 class PhoneValidator:
     def validate(self, phone):
+        correct_phone = ""
         normal = ""
-        if phone[0] == '8':
-            parse = phonenumbers.parse(phone, "RU")
+        for letter in phone:
+            if letter.isnumeric() or letter == '+':
+                correct_phone += letter
+            else:
+                return "Error"
+        if correct_phone[0] == '8':
+            parse = phonenumbers.parse(correct_phone, "RU")
+            valid = phonenumbers.format_number(parse, phonenumbers.PhoneNumberFormat.NATIONAL)
+        elif correct_phone[0] == '+' and correct_phone[1] == '7':
+            parse = phonenumbers.parse(correct_phone, "RU")
             valid = phonenumbers.format_number(parse, phonenumbers.PhoneNumberFormat.NATIONAL)
         else:
-            parse = phonenumbers.parse(phone, "RU")
-            valid = phonenumbers.format_number(parse, phonenumbers.PhoneNumberFormat.NATIONAL)
+            return "Error"
         for letter in valid:
             if letter.isalnum():
                 normal += letter
