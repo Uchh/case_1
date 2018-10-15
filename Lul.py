@@ -35,16 +35,19 @@ class PhoneValidator:
                 correct_phone += letter
         for letter in correct_phone:
             if len(correct_phone) == 10:
-                parse = phonenumbers.parse(correct_phone, "RU")
-                valid = phonenumbers.format_number(parse, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+                with suppress(Exception):
+                    parse = phonenumbers.parse(correct_phone, "RU")
+                    valid = phonenumbers.format_number(parse, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
             elif len(correct_phone) == 11:
                 if correct_phone[0] == '8':
-                    parse = phonenumbers.parse(correct_phone, "RU")
-                    valid = phonenumbers.format_number(parse, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+                    with suppress(Exception):
+                        parse = phonenumbers.parse(correct_phone, "RU")
+                        valid = phonenumbers.format_number(parse, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
             elif len(correct_phone) == 12:
                 if correct_phone[0] == '+' and correct_phone[1] == '7':
-                    parse = phonenumbers.parse(correct_phone, "RU")
-                    valid = phonenumbers.format_number(parse, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+                    with suppress(Exception):
+                        parse = phonenumbers.parse(correct_phone, "RU")
+                        valid = phonenumbers.format_number(parse, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
         with suppress(Exception):
             for letter in valid:
                 if letter.isnumeric() or letter == '+':
@@ -56,7 +59,7 @@ if __name__ == '__main__':
     Email1 = Email.validater("work.cherepennikov@mail.ru")
     print(Email1)
     Phone = PhoneValidator()
-    Phone1 = Phone.validate("89032225490")
+    Phone1 = Phone.validate("+79032225490")
     print(Phone1)
     logo = Logo()
     otrisovka = logo.otrisovka()
