@@ -7,24 +7,25 @@ class EmailValidator:
 
     def validater(self, email):
         counter = 0
+        legit_letters = ('qazwsxedcrfvtgbyhnujmiklop1234567890_.-')
         kirill = ('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')
-        wrong_letters = ('\|/?,!#№%:;()+=$&*^±§><`~][{}')
-        find_wrong = [x for x in wrong_letters if x in email.lower()]
-        if len(find_wrong) > 0:
+        find_wrong = [x for x in legit_letters if x in email.lower()]
+        if len(find_wrong) == 0:
             return None
         find_kirill = [x for x in kirill if x in email.lower()]
         if len(find_kirill) > 0:
             return None
-        for letter in email:
-            if letter == "@":
-                counter += 1
-        if counter > 1:
-            return None
-        with suppress(Exception):
-            [some_name, some_domen] = email.split("@")
-            [some_domen, some_domen_zone] = some_domen.split(".")
-            return some_name + "@" + some_domen + "." + some_domen_zone
-
+        if email[0].isalnum():
+            for letter in email:
+                if letter == "@":
+                    counter += 1
+            if counter > 1:
+                return None
+            with suppress(Exception):
+                [some_name, some_domen] = email.split("@")
+                [some_domen, some_domen_zone] = some_domen.split(".")
+                return some_name + "@" + some_domen + "." + some_domen_zone
+        else: return None
 
 class PhoneValidator:
     def validate(self, phone):
@@ -56,7 +57,7 @@ class PhoneValidator:
 
 if __name__ == '__main__':
     Email = EmailValidator()
-    Email1 = Email.validater("work.cherepennikov@mail.ru")
+    Email1 = Email.validater("karasev_marker357@gmail.com")
     print(Email1)
     Phone = PhoneValidator()
     Phone1 = Phone.validate("+79032225490")
