@@ -5,6 +5,9 @@ import phonenumbers
 
 class EmailValidator:
 
+    #
+    #       Соответсвует правилам почт сервиса mail.ru
+    #
     def validater(self, email):
         counter = 0
         legit_letters = ('qazwsxedcrfvtgbyhnujmiklop1234567890_.-')
@@ -25,7 +28,13 @@ class EmailValidator:
                 [some_name, some_domen] = email.split("@")
                 [some_domen, some_domen_zone] = some_domen.split(".")
                 return some_name + "@" + some_domen + "." + some_domen_zone
-        else: return None
+        else:
+            return None
+
+    #
+    #       Уберает все буквы и лишние символы, нормализует телефоны под интернациональный вид с кодом +7
+    #       Внимание! Такой номер как 8903р222549 не выдаст ошибку, переделается в +78893222549,
+    #       что в целом не является ошибкой!
 
 class PhoneValidator:
     def validate(self, phone):
@@ -55,12 +64,13 @@ class PhoneValidator:
                     normal += letter
             return normal
 
+
 if __name__ == '__main__':
     Email = EmailValidator()
     Email1 = Email.validater("karasev_marker357@gmail.com")
     print(Email1)
     Phone = PhoneValidator()
-    Phone1 = Phone.validate("+79032225490")
+    Phone1 = Phone.validate("8-927-001-42-78")
     print(Phone1)
     logo = Logo()
     otrisovka = logo.otrisovka()
