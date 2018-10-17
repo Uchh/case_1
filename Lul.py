@@ -10,13 +10,9 @@ class EmailValidator:
     #
     def validater(self, email):
         counter = 0
-        legit_letters = ('qazwsxedcrfvtgbyhnujmiklop1234567890_.-')
-        kirill = ('абвгдеёжзийклмнопрстуфхцчшщъыьэюя')
-        find_wrong = [x for x in legit_letters if x in email.lower()]
-        if len(find_wrong) == 0:
-            return None
-        find_kirill = [x for x in kirill if x in email.lower()]
-        if len(find_kirill) > 0:
+        nonlegit_letters = ('±§><!#$%^&*()+"№%,;=[]`~\|/?{}абвгдеёжзийклмнопрстуфхцчшщъыьэюя ')
+        find_bad = list(set(email) & set(nonlegit_letters))
+        if len(find_bad) > 0:
             return None
         if email[0].isalnum():
             for letter in email:
@@ -31,8 +27,7 @@ class EmailValidator:
         else:
             return None
 
-    #
-    #       Уберает все буквы и лишние символы, нормализует телефоны под интернациональный вид с кодом +7
+    #       Убирает все буквы и лишние символы, нормализует телефоны под интернациональный вид с кодом +7
     #       Внимание! Такой номер как 8903р222549 не выдаст ошибку, переделается в +78893222549,
     #       что в целом не является ошибкой!
 
@@ -67,7 +62,7 @@ class PhoneValidator:
 
 if __name__ == '__main__':
     Email = EmailValidator()
-    Email1 = Email.validater("karasev_marker357@gmail.com")
+    Email1 = Email.validater("sky.fox.75@mail.ru")
     print(Email1)
     Phone = PhoneValidator()
     Phone1 = Phone.validate("8-927-001-42-78")
