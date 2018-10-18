@@ -11,6 +11,7 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertEqual(validator.validater("j@ob@rambler.com"), None)
         self.assertEqual(validator.validater("#job@rambler.com"), None)
         self.assertEqual(validator.validater("job.job@rambler.com"), "job.job@rambler.com")
+        self.assertEqual(validator.validater(".jobjob@kk@mail.ru"), None)
 
 if __name__ == '__main__':
     unittest.main()
